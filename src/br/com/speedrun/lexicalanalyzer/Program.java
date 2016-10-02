@@ -5,7 +5,7 @@ import java.io.StringReader;
 
 class Program {
 	public static void main(String[] args) throws IOException {
-		String expr = "  + - * == === != !== > >= < <=";
+		String expr = "do { i++ }while(true); \n\t";
 
 		LexicalAnalyzer lexical = new LexicalAnalyzer(new StringReader(expr));
 		ActionScriptToken token;

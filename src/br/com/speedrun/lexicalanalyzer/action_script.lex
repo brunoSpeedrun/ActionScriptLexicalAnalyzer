@@ -61,7 +61,7 @@ LOGICAL_AND = "&&"
 LOGICAL_AND_ASSINGMENT = "&&="
 LOGICAL_NOT = "!"
 LOGICAL_OR = "||"
-LOGICAL_OR_ASSINGMENT  = "||"
+LOGICAL_OR_ASSINGMENT  = "||="
 
 INTEIRO = 0|[1-9][0-9]*
 
@@ -104,62 +104,71 @@ INTEIRO = 0|[1-9][0-9]*
 {STRICT_EQUALITY}            { return createToken("igualdade restrita", yytext()); }
 {STRICT_INEQUALITY}          { return createToken("desigualdade restrita", yytext()); }
 
+{LOGICAL_AND}                { return createToken("AND lógico", yytext()); }
+{LOGICAL_AND_ASSINGMENT}     { return createToken("AND lógico e atribuição", yytext()); }
+{LOGICAL_NOT}                { return createToken("NOT lógico", yytext()); }
+{LOGICAL_OR}                 { return createToken("OR lógico", yytext()); }
+{LOGICAL_OR_ASSINGMENT}      { return createToken("OR lógico e atribuição", yytext()); }
+
+{INTEIRO}                    { return createToken("inteiro", yytext()); }
+
 "class"						 { return createToken("class", yytext()); }
 "if"                         { return createToken("if", yytext()); }
 "for"                        { return createToken("for", yytext());}
-"for each"
-"const"
-"extends"
-"function"
-"get"
-"implements"
-"interface"
-"namespace"
-"package"
-"set"
-"var"
-"import"
-"include"
-"use namespace"
-"break"
-"case"
-"continue"
-"default"
-"do"
-"while"
-"else"
-"label"
-"return"
-"super"
-"switch"
-"throw"
-"try"
-"catch"
-"finally"
-"with"
-"dynamic"
-"final"
-"internal"
-"native"
-"override"
-"private"
-"protected"
-"public"
-"static"
-"false"
-"null"
-"this"
-"true"
-"int"
-"String"
-"Boolean"
-"Number"
-"uint"
+"for each"                   { return createToken("for each", yytext());}
+"const"                      { return createToken("const", yytext());}
+"extends"                    { return createToken("extends", yytext());}
+"function"					 { return createToken("function", yytext());}
+"get"						 { return createToken("get", yytext());}
+"implements"				 { return createToken("implements", yytext());}
+"interface"					 { return createToken("interface", yytext());}
+"namespace"					 { return createToken("namespace", yytext());}
+"package"					 { return createToken("package", yytext());}
+"set"						 { return createToken("set", yytext());}
+"var"						 { return createToken("var", yytext());}
+"import"					 { return createToken("import", yytext());}
+"include"					 { return createToken("include", yytext());}
+"use namespace"				 { return createToken("use namespace", yytext());}
+"break"						 { return createToken("break", yytext());}
+"case"						 { return createToken("case", yytext());}
+"continue"					 { return createToken("continue", yytext());}
+"default"					 { return createToken("default", yytext());}
+"do"						 { return createToken("do", yytext());}
+"while"						 { return createToken("while", yytext());}
+"else"						 { return createToken("else", yytext());}
+"label"						 { return createToken("label", yytext());}
+"return"					 { return createToken("return", yytext());}
+"super"						 { return createToken("super", yytext());}
+"switch"					 { return createToken("switch", yytext());}
+"throw"					     { return createToken("throw", yytext());}
+"try"						 { return createToken("try", yytext());}
+"catch"						 { return createToken("catch", yytext());}
+"finally"					 { return createToken("finally", yytext());}
+"with"						 { return createToken("with", yytext());}
+"dynamic"					 { return createToken("dynamic", yytext());}
+"final"						 { return createToken("final", yytext());}
+"internal"					 { return createToken("internal", yytext());}
+"native"					 { return createToken("native", yytext());}
+"override"					 { return createToken("override", yytext());}
+"private"					 { return createToken("private", yytext());}
+"protected"					 { return createToken("protected", yytext());}
+"public"					 { return createToken("public", yytext());}
+"static"					 { return createToken("static", yytext());}
+"false"						 { return createToken("false", yytext());}
+"null"						 { return createToken("null", yytext());}
+"this"						 { return createToken("this", yytext());}
+"true"						 { return createToken("true", yytext());}
+"int"						 { return createToken("int", yytext());}
+"String"					 { return createToken("String", yytext());}
+"Boolean"					 { return createToken("Boolean", yytext());}
+"Number"					 { return createToken("Number", yytext());}
+"uint"						 { return createToken("uint", yytext());}
 "++"                         { return createToken("incremento", yytext());}
-{BRANCO}                     { return createToken("branco", yytext()); }
+
+{BRANCO}                     { return createToken("branco", yytext().equals("\n") ? "\\n" : yytext().equals("\r") ? "\\r" : yytext().equals("\t") ? "\\t" : yytext()); }
 {IDENTIFIER}                 { return createToken("identificador", yytext()); }
-{INTEIRO}                    { return createToken("inteiro", yytext()); }
 
 
 
-. { throw new RuntimeException("Caractere inválido " + yytext()); }
+
+. { throw new RuntimeException("Token inválido em Action Script. \"" + yytext() + "\" Linha: " + yyline + " Coluna: " + yycolumn); }
